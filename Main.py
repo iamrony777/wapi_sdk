@@ -5,6 +5,7 @@ from api_client.apis.get_check_v1 import GetCheckV1Api
 from api_client.apis.get_status_v1 import GetStatusV1Api
 from api_client.apis.delete_remove_v1 import DeleteRemoveV1Api
 from api_client.apis.post_send_v1 import PostSendV1Api
+from api_client.models.send_body import SendBody
 import asyncio
 import threading
 
@@ -43,6 +44,33 @@ async def main():
     
     
     
+class WhatsappApi:
+    def __init__(self,owner_number,user_agent):
+        self.__owner = owner_number
+        self.__user_agent = user_agent
+        self.__client = Client(base_url="https://wapi.ffstudios.io/",authentication_key="")
+        
+    async def send(self,send_body:SendBody):
+        sendApi = PostSendV1Api(client=self.__client, sendBody=send_body)
+        send_response = await sendApi.fireAsyncApi()
+        return send_response.status_code
     
+    async def get_chats(self,number,number_from):
+        chatApi = GetChatV1Api(id=number,from_=number_from)
+        chat_response = await chatApi.fireAsyncApi()
+        return chat_response.status_code
+    
+    async def check_number(self, number):
+        checkApi = GetCheckV1Api(id=number)
+        check_response = await checkApi.fireAsyncApi()
+        return check_response.status_code
+    
+    async def setup_user(self, number):
+        setupApi = GetSetupV1Api(id=number)
+        setup_response = await setupApi.fireAsyncApi()
+        return setup_response.status_code
+    
+    
+        
 
 asyncio.run(main())
