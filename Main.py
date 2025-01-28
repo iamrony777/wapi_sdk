@@ -6,6 +6,7 @@ from api_client.apis.get_status_v1 import GetStatusV1Api
 from api_client.apis.delete_remove_v1 import DeleteRemoveV1Api
 from api_client.apis.post_send_v1 import PostSendV1Api
 from api_client.models.send_body import SendBody
+from api_client.apis.ping import Ping
 import asyncio
 import threading
 
@@ -56,21 +57,29 @@ class WhatsappApi:
         return send_response.status_code
     
     async def get_chats(self,number,number_from):
-        chatApi = GetChatV1Api(id=number,from_=number_from)
+        chatApi = GetChatV1Api(id=number,from_=number_from,client=self.__client)
         chat_response = await chatApi.fireAsyncApi()
         return chat_response.status_code
     
     async def check_number(self, number):
-        checkApi = GetCheckV1Api(id=number)
+        checkApi = GetCheckV1Api(id=number,client=self.__client)
         check_response = await checkApi.fireAsyncApi()
         return check_response.status_code
     
     async def setup_user(self, number):
-        setupApi = GetSetupV1Api(id=number)
+        setupApi = GetSetupV1Api(id=number,client=self.__client)
         setup_response = await setupApi.fireAsyncApi()
         return setup_response.status_code
     
+    async def get_status (self,number):
+        statusApi = GetStatusV1Api(id=number,client=self.__client)
+        status_response = await statusApi.fireAsyncApi()
+        return status_response.status_code
     
+    async def ping_server(self):
+        pingApi = Ping(client=self.__client)
+        ping_response = await pingApi.fireAsyncApi()
+        return ping_response.status_code
         
 
 asyncio.run(main())
