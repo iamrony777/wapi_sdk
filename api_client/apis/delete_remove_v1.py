@@ -1,8 +1,9 @@
 from ..client import Client
+from ..models.validation import IdValidation
 
 class DeleteRemoveV1Api:
     def __init__(self,id,client:Client):
-        self.__id = id
+        self.__data = IdValidation(id=id)
         self.__client = client
 
     def fireApi(self):
@@ -10,7 +11,7 @@ class DeleteRemoveV1Api:
             method="delete",
             url="/api/v1/remove",
             params={
-                "id":self.__id
+                "id":self.__data.id
             }
         )
         return respond
@@ -19,7 +20,7 @@ class DeleteRemoveV1Api:
             method="delete",
             url="/api/v1/remove",
             params={
-            "id":self.__id
+            "id":self.__data.id
             }
         )
         return respond

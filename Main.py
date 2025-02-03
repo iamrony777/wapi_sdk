@@ -43,10 +43,16 @@ async def main():
     response4 = await removeApi.fireAsyncApi()
     print("remove "+str(response4.status_code))
     
+    sendBodeTest= SendBody(id="917385043889",to="917385043889")
+    sendApi = PostSendV1Api(sendBody=sendBodeTest,client=client)
+    response5 = await sendApi.fireAsyncApi()
+    print("sendResponse" +str(response5.status_code))
+    
+    # whatsAppApiImplementation = WhatsappApi(owner_number="917385043889",user_agent="91")
     
     
 class WhatsappApi:
-    def __init__(self,owner_number,user_agent):
+    def __init__(self,owner_number:str,user_agent:str):
         self.__owner = owner_number
         self.__user_agent = user_agent
         self.__client = Client(base_url="https://wapi.ffstudios.io/",authentication_key="")
@@ -66,8 +72,8 @@ class WhatsappApi:
         check_response = await checkApi.fireAsyncApi()
         return check_response.status_code
     
-    async def setup_user(self, number):
-        setupApi = GetSetupV1Api(id=number,client=self.__client)
+    async def setup_owner(self):
+        setupApi = GetSetupV1Api(id=self.__owner,client=self.__client)
         setup_response = await setupApi.fireAsyncApi()
         return setup_response.status_code
     
@@ -82,4 +88,4 @@ class WhatsappApi:
         return ping_response.status_code
         
 
-asyncio.run(main())
+# asyncio.run(main())

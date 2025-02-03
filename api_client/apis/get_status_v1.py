@@ -1,8 +1,9 @@
 from ..client import Client
+from ..models.validation import IdValidation
 
 class GetStatusV1Api:
     def __init__(self,id,client:Client):
-        self.__id = id
+        self.__id = IdValidation(id=id)
         self.__client = client
 
     def fireApi(self):
@@ -10,7 +11,7 @@ class GetStatusV1Api:
             method="get",
             url="/api/v1/status",
             params={
-                "id":self.__id
+                "id":self.__id.id
             }
         )
         return respond
@@ -19,7 +20,7 @@ class GetStatusV1Api:
             method="get",
             url="/api/v1/status",
             params={
-            "id":self.__id
+            "id":self.__id.id
             }
         )
         return respond

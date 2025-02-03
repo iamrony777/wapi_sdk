@@ -1,20 +1,14 @@
-class SendBody():
-    def __init__(self,id,to,text,image,video,audio,gifPlayback):
-        self.__id=id
-        self.__to = to
-        self.__text = text
-        self.__image = image
-        self.__video= video
-        self.__audio = audio
-        self.__gifPlayback = gifPlayback
+from pydantic import BaseModel, Field
 
-    def getDataDick(self)->dict[str,any]:
-        return {
-            "id":self.__id,
-            "to":self.__to,
-            "text":self.__text,
-            "image":self.__image,
-            "video":self.__video,
-            "audio":self.__audio,
-            "gifPlayback":self.__gifPlayback
-        }
+class SendBody(BaseModel):
+    
+    id: str = Field(..., min_length=11, max_length=13, description="Sender ID")
+    to: str = Field(..., min_length=11, max_length=13, description="Receiver ID")
+    text: str = Field(None, description="Text message content (optional)")
+    image: str = Field(None, description="Image URL (optional)")
+    video: str = Field(None, description="Video URL (optional)")
+    audio: str = Field(None, description="Audio URL (optional)")
+    gifPlayback: bool = Field(default=False, description="Enable GIF autoplay (optional)")
+
+    def get_data_dict(self) -> dict[str, any]:
+        return self.model_dump()
