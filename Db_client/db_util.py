@@ -1,6 +1,6 @@
 import mysql.connector as sql
 import time
-from db_props import DBPropertyUtil
+from .db_props import DBPropertyUtil
 
         
 class DBConnUtil():
@@ -19,4 +19,4 @@ class DBConnUtil():
         else:
             print("Unable to connect")
             
-DBConnUtil.makeConnection()
+# DBConnUtil.makeConnection()
