@@ -60,8 +60,8 @@ async def main():
     # check_response= await whatsAppApiImplementation.check_number(number='917385043889')
     # print(check_response)
     
-    # setup_response= await whatsAppApiImplementation.setup_owner()
-    # print(setup_response)
+    setup_response= await whatsAppApiImplementation.setup_owner()
+    print(setup_response)
     
     # status_response= await whatsAppApiImplementation.get_status(number='917385043889')
     # print(check_response)   

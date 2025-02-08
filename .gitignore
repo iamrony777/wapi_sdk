@@ -1,2 +1,3 @@
 /env
-/Db_client/db_props.py
+# /Db_client/db_props.py
+.env
