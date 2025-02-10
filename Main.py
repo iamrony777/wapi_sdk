@@ -80,38 +80,38 @@ class WhatsappApi:
     async def send(self,send_body:SendBody):
         sendApi = PostSendV1Api(client=self.__client, sendBody=send_body)
         send_response = await sendApi.fireAsyncApi()
-        api_id = DBLogging.addLog(method='send',id=send_body.id,to=send_body.to,response_code=send_response.status_code)
+        api_id = DBLogging.addLog(method='send',user_id=send_body.id,to=send_body.to,response_code=send_response.status_code)
         DBLogging.addMessage(api_id=api_id,sender_id=send_body.id,to=send_body.to,text=send_body.text,image=send_body.image,video=send_body.image,gifPlayback=send_body.gifPlayback)
         return send_response.status_code
     
     async def get_chats(self,number,number_from):
         chatApi = GetChatV1Api(id=number,from_=number_from,client=self.__client)
         chat_response = await chatApi.fireAsyncApi()
-        DBLogging.addLog(method='chats',id=number,from_ = number_from,response_code=chat_response.status_code)
+        DBLogging.addLog(method='chats',user_id=number,from_ = number_from,response_code=chat_response.status_code)
         return chat_response.status_code
     
     async def check_number(self, number):
         checkApi = GetCheckV1Api(id=number,client=self.__client)
         check_response = await checkApi.fireAsyncApi()
-        DBLogging.addLog(method='check',id=number,response_code=check_response.status_code)
+        DBLogging.addLog(method='check',user_id=number,response_code=check_response.status_code)
         return check_response.status_code
     
     async def setup_owner(self):
         setupApi = GetSetupV1Api(id=self.__owner,client=self.__client)
         setup_response = await setupApi.fireAsyncApi()
-        DBLogging.addLog(method='setup',id=self.__owner,response_code=setup_response.status_code)
+        DBLogging.addLog(method='setup',user_id=self.__owner,response_code=setup_response.status_code)
         return setup_response.status_code
     
     async def get_status (self,number):
         statusApi = GetStatusV1Api(id=number,client=self.__client)
         status_response = await statusApi.fireAsyncApi()
-        DBLogging.addLog(method='status',id=number,response_code=status_response.status_code)
+        DBLogging.addLog(method='status',user_id=number,response_code=status_response.status_code)
         return status_response.status_code
     
     async def ping_server(self):
         pingApi = Ping(client=self.__client)
         ping_response = await pingApi.fireAsyncApi()
-        DBLogging.addLog(method='ping',id=self.__owner,response_code=ping_response.status_code)
+        DBLogging.addLog(method='ping',user_id=self.__owner,response_code=ping_response.status_code)
         return ping_response.status_code
         
 

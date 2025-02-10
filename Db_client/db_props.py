@@ -11,3 +11,8 @@ class DBPropertyUtil:
             "user": os.getenv("DB_USER"),
             "password": os.getenv("DB_PASSWORD")
         }
+
+    @staticmethod
+    def getConnUrl():
+        load_dotenv()
+        return os.getenv("DB_URL")
